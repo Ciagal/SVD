@@ -3,6 +3,9 @@
 branch = True
 source = svd
 # omit = bad_file.py
+omit =
+    src/svd/examples.py
+    src/svd/run_synthetic.py
 
 [paths]
 source =
