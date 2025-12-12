@@ -2,7 +2,9 @@
 SVD
 ===
 
-This is the documentation of **SVD**.
+This project implements Singular Value Decomposition (SVD) from scratch
+using NumPy. The goal is to understand how SVD works internally and compare
+the implementation with scikit-learn.
 
 .. note::
 
