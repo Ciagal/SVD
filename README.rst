@@ -33,131 +33,103 @@
 SVD
 ===
 
+# SVD – custom implementation
 
-    Add a short description here!
-
-# Singular Value Decomposition (SVD) – implementation and comparison
-
-## 📌 Project overview
-
-This project implements **Singular Value Decomposition (SVD)** from scratch using **NumPy** and compares it with the implementation available in **scikit-learn**.  
-The main focus is on **low-rank matrix approximation** and **denoising** of synthetic data.
-
-The project demonstrates that truncated SVD:
-- captures the dominant structure of data,
-- removes noise,
-- produces results comparable to `sklearn.utils.extmath.randomized_svd`.
+This repository contains a custom implementation of **Singular Value Decomposition (SVD)** using NumPy, together with experiments, tests and comparison with scikit-learn.
 
 ---
 
-## 🎯 Goal of the project
+## Overview
 
-The goal of this project is to:
-- implement SVD manually using linear algebra concepts,
-- apply it to low-rank matrix approximation,
-- analyze reconstruction errors for noisy and clean data,
-- compare results with the scikit-learn implementation.
-
----
-
-## ❓ Problem statement
-
-Given a noisy data matrix \( A \), how well can truncated SVD:
-- approximate the original matrix,
-- recover the underlying low-rank structure,
-- and reduce noise compared to a full noisy reconstruction?
+The project includes:
+- manual implementation of SVD,
+- synthetic low-rank data generator,
+- experiments on noisy and clean matrices,
+- comparison with `sklearn.utils.extmath.randomized_svd`,
+- automated tests and coverage.
 
 ---
 
-## 🧠 Method
+## Installation
 
-### Implemented SVD
+Create and activate a virtual environment:
 
-The SVD is computed as follows:
+```bash
+python -m venv env
+source env/bin/activate
 
-1. Compute:
-   \[
-   B = A^T A
-   \]
-2. Perform eigenvalue decomposition:
-   \[
-   B = V \Lambda V^T
-   \]
-3. Singular values:
-   \[
-   \sigma_i = \sqrt{\lambda_i}
-   \]
-4. Left singular vectors:
-   \[
-   U_i = \frac{A v_i}{\sigma_i}
-   \]
+pip install -r requirements.txt
 
-This approach follows the mathematical definition of SVD:
-\[
-A = U \Sigma V^T
-\]
+pip install numpy matplotlib scikit-learn pytest tox
 
----
 
-### Synthetic dataset
+##Usage
 
-A synthetic **low-rank matrix** is generated as:
+python src/svd/run_synthetic.py
 
-\[
-A_{clean} = U S V^T
-\]
+This script:
 
-where:
-- rank \( r = 5 \),
-- Gaussian noise is added to obtain a noisy matrix:
-\[
-A_{noisy} = A_{clean} + \text{noise}
-\]
+-generates synthetic low-rank data,
 
----
+-computes truncated SVD,
 
-## 📊 Experiments and results
+-compares reconstruction errors,
 
-### Reconstruction error
+-prints top singular values.
 
-Reconstruction error is measured using the Frobenius norm:
+##Run examples with plots
 
-\[
-\| A - \hat{A} \|_F
-\]
+python src/svd/examples.py
 
-Experiments are performed for different ranks \( k \in \{1,2,3,5,10,20\} \).
+This script:
 
-Key observations:
-- For noisy data, the reconstruction error decreases with increasing \( k \).
-- For clean data, the lowest error is achieved around the true rank \( r = 5 \).
-- Using larger \( k \) for clean data leads to fitting noise and slightly higher error.
+-shows a simple 3 x 3 SVD example,
 
----
+-visualizes reconstruction errors for different ranks,
 
-### Comparison with scikit-learn
+-compares results with scikit-learn.
 
-Results show that:
-- Singular values closely match those from `randomized_svd`.
-- Reconstruction errors differ only by numerical precision.
-- The custom implementation behaves consistently with scikit-learn.
+##Tests
 
----
+pytest
 
-## 🧪 Tests
+Tests include:
 
-The project includes automated tests using **pytest**, covering:
-- output shapes of SVD,
-- reconstruction accuracy,
-- non-negativity and ordering of singular values,
-- orthonormality of matrices \( U \) and \( V \),
-- comparison with scikit-learn,
-- denoising effectiveness for synthetic data.
+-output shape validation,
 
----
+-reconstruction accuracy,
 
-## 📂 Project structure
+-singular value ordering,
 
+-orthonormality of matrices,
+
+-comparison with scikit-learn,
+
+-denoising effectiveness on synthetic data.
+
+##Tox
+
+To run tests in an isolated environment:
+
+pip install tox
+tox
+
+To run documentation environment (if configured):
+
+tox -e docs
+
+##Project structure
+
+src/svd
+├── svd.py            # custom SVD implementation
+├── synthetic.py      # synthetic low-rank data generator
+├── run_synthetic.py  # experiment script
+├── examples.py       # demos and plots
+tests
+├── test_svd.py
+├── test_skeleton.py
+docs
+├── Rapport_SVD_Algorithm.pdf
 
 
 
